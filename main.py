@@ -40,15 +40,15 @@ def iegut_marsrutu(adrese):
         page.wait_for_load_state("domcontentloaded")
 
         try:
-            page.wait_for_selector("h1", timeout=10000)  # gaida līdz 10 sekundēm, lai parādās virsraksts
-            virsraksts = page.locator("h1").inner_text()
+            page.wait_for_selector("#planner_header", timeout=10000)  # gaida līdz 10 sekundēm, lai parādās virsraksts
+            virsraksts = page.locator("#planner_header").inner_text()
             print("Maršruta virsraksts:", virsraksts)
-        except:
-            print("Virsraksts nav atrasts.")
+        except Exception as e:
+            print("Virsraksts nav atrasts.", str(e))
 
 # Mēģinām atrast pieturas
         try:
-            pieturas = page.locator("span, strong, td")
+            pieturas = page.locator(".ib") 
             count = pieturas.count()
             if count == 0:
                 print("Pieturas nav atrastas.")
@@ -56,10 +56,11 @@ def iegut_marsrutu(adrese):
                 print(f"Atrastas {count} pieturas:")
                 for i in range(count):
                     teksts = pieturas.nth(i).inner_text()
+                    print(teksts)
                     if "Vieta" in teksts:  # Filtrējam pēc teksta
                         print(f"{i+1}. {teksts}")
-        except:
-            print("Pieturas nav atrastas.")
+        except Exception as e:
+            print("Pieturas nav atrastas.", str(e))
 
 # Mēģinām atrast laiku un vietu
         try:
@@ -85,7 +86,6 @@ def iegut_marsrutu(adrese):
 def galvenais():
     user = int(input("Kurš lietotājs (1 vai 2): "))
     adrese = ""
-    1
     if user == 1:
         # lietotāja izvelne meršrutam
         rout = int(input("Kurš maršruts (1, 2 vai 3): "))
@@ -100,7 +100,6 @@ def galvenais():
     elif user == 2:
         # lietotāja izvelne meršrutam
         rout = int(input("Kurš maršruts (1, 2 vai 3): "))
-        # tavi linki pie adresse
         if rout == 1:   
             adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/56.95859;24.0845/56.97311;24.19454/2025-05-19 "
         elif rout == 2: 
@@ -124,16 +123,10 @@ def galvenais():
 if __name__ == "__main__":
     galvenais()
 
-#viss gan jau jāieliek funkcijā un jaizmanto main bet to var vēlāk, jeb es to izdarīšu rīt (gan jau)
 
 
 
 
-
-
-
-# tālakas izvelnes var veidot kad ir pieejami dati jo nezi kā izkatīsies tie
-# šie vairāk ir uz kuru printēt unkuru info neprintēt userim
 
 transp = int(input("Kurš transports (1 - viss,  2 - tikai A, 3 - tikai T ): "))
 #if tranport == 2 tad print only A, if transport == 3 tad print only T, if == 1 print all  
@@ -142,14 +135,6 @@ parsiet = int(input("Vai ar pārsēšanos ar? (1 - Jā, 2 - Nē): "))
 # ja parsiet == 1 tad neko nedarīt un visu printēt 
 
 
-
-
-
-
-
-
-# tālāk tu izmanto "adrese" kā savu linka apzīmējumu jeb kurā adījumā un iegūsti vērtības
-# es tālāk paturpināšu un uzlabošu gana drīz ar :)
 
 
 # jāpaskatās būs kā var uztaisīt lai var user mēģināt vēlreiz, bet tas tā
