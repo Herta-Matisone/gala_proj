@@ -1,30 +1,30 @@
+'''
+ 1. variants. Šis man nestrādā, jo dati ir javascript(mēģināšu citu variantu).
+ import requests
+ from bs4 import BeautifulSoup
 
-# 1. variants. Šis man nestrādā, jo dati ir javascript(mēģināšu citu variantu).
-# import requests
-# from bs4 import BeautifulSoup
+ def iegut_marsrutu(adrese):
+     lapa = requests.get(adrese)
+     if lapa.status_code !=200:
+         print(f"Kķūda ielādējot lapu! Statusa kods: {lapa.status_code}")
+         return
+  
+     lapas_saturs = BeautifulSoup(lapa.content, "html.parser")
 
-# def iegut_marsrutu(adrese):
-#     lapa = requests.get(adrese)
-#     if lapa.status_code !=200:
-#         print(f"Kķūda ielādējot lapu! Statusa kods: {lapa.status_code}")
-#         return
-    
-#     lapas_saturs = BeautifulSoup(lapa.content, "html.parser")
+     virsraksts = lapas_saturs.find("h1")
+     if virsraksts:
+         print("Maršruta virsraksts:", virsraksts.get_text(strip=True))
+     else:
+         print("Virsraksts nav atrasts.")
 
-#     virsraksts = lapas_saturs.find("h1")
-#     if virsraksts:
-#         print("Maršruta virsraksts:", virsraksts.get_text(strip=True))
-#     else:
-#         print("Virsraksts nav atrasts.")
-
-#     saraksti = lapas_saturs.find_all("div", class_="stop")
-#     if not saraksti:
-#         print("Neatradām pieturas vai sarakstus šajā lapā.")
-#     else:
-#         print(f"Atrasts {len(saraksti)} pieturas:")
-#         for i, pietura in enumerate(saraksti, 1):
-#             print(f"{i}. {pietura.get_text(strip=True)}")
-
+     saraksti = lapas_saturs.find_all("div", class_="stop")
+     if not saraksti:
+         print("Neatradām pieturas vai sarakstus šajā lapā.")
+     else:
+         print(f"Atrasts {len(saraksti)} pieturas:")
+         for i, pietura in enumerate(saraksti, 1):
+             print(f"{i}. {pietura.get_text(strip=True)}")
+'''
 # 2.variants
 from playwright.sync_api import sync_playwright
 
@@ -46,9 +46,8 @@ def iegut_marsrutu(adrese, transp):
         try:
             page.wait_for_selector("#planner_header", timeout=10000)  # gaida līdz 10 sekundēm, lai parādās virsraksts
             virsraksts = page.locator("#planner_header").inner_text()
-            print("Maršruta virsraksts:", virsraksts)
         except Exception as e:
-            print("Virsraksts nav atrasts.", str(e))
+            print("Virsraksts nav atrasts., viss slikti", str(e))
 
         # Mēģinām atrast pieturas
         try:
@@ -92,9 +91,9 @@ def iegut_marsrutu(adrese, transp):
                     if "bus" in klases:
                         tips = "A"   # Autobuss
                     elif "trol" in klases:
-                        tips = "T"   # Trolejbus
+                        tips = "TRO"   # Trolejbus
                     elif "tram" in klases:
-                        tips = "TR"  # Tramvajs
+                        tips = "TRA"  # Tramvajs
                     else:
                         tips = "?"   # Nezināms tips
 
@@ -158,17 +157,8 @@ def galvenais():
     laiks = str(input("kādā laikā?(formātā - 13:00): "))
     adrese = adrese + "/" + laiks
     transp = int(input("Kurš transports (1 - viss,  2 - tikai Autobusu, 3 - tikai Tramvaju/Trole): "))
-    
 
-    #if adrese:
-    #    print(f"lādē datus")
     iegut_marsrutu(adrese, transp)
-#print(f"Lādējas datus no: {adrese}")
-#iegut_marsrutu(adrese)
-
 
 if __name__ == "__main__":
     galvenais()
-
-
-# jāpaskatās būs kā var uztaisīt lai var user mēģināt vēlreiz, bet tas tā
