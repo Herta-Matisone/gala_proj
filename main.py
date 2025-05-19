@@ -37,7 +37,7 @@ def iegut_marsrutu(adrese):
         page.goto(adrese)
 
         # Gaidām, kamēr DOM ir ielādēts
-        page.wait_for_load_state("domcontentloaded")
+        page.wait_for_load_state("networkidle")
 
         try:
             page.wait_for_selector("#planner_header", timeout=10000)  # gaida līdz 10 sekundēm, lai parādās virsraksts
@@ -62,26 +62,44 @@ def iegut_marsrutu(adrese):
         except Exception as e:
             print("Pieturas nav atrastas.", str(e))
 
-# Mēģinām atrast laiku un vietu
+# Mēģinām atrast bus/trol num
         try:
-            laiks_un_vieta = page.locator("strong").inner_text()
+            pieturass = page.locator(".num.num1.bus, .num.num2.bus, .num.num1.trol, .num.num2.trol") 
+            count = pieturass.count()
+            if count == 0:
+                print("braucamie nav atrasti.")
+            else:
+                print(f"Atrastas {count} braucamie:")
+                for i in range(count):
+                    teksts = pieturass.nth(i).inner_text()
+                    print(teksts)
+                    if "Vieta" in teksts:  # Filtrējam pēc teksta
+                        print(f"{i+1}. {teksts}")
+        except Exception as e:
+            print("braucamie nav atrasti.", str(e))
+'''
+        try:
+            laiks_un_vieta = laiks_un_vieta.text_content().strip()
             print("Maršruta laiks un vieta:", laiks_un_vieta)
-        except:
-            print("Laiks un vieta nav atrasts.")
+        except Exception as e:
+            print("Laiks un vieta nav atrasts.", str(e))
 
         # Mēģinām iegūt pieturas
-        page.wait_for_selector(".stop", timeout=10000)
+        page.wait_for_selector(".num num2 trol", ".num num2 bus", timeout=10000)
         pieturas = page.locator(".stop")
+
         count = pieturas.count()
-        if count == 0:
-            print("Pieturas nav atrastas.")
+        if page.locator(".stop").count() == 0:
+            print("Pieturas nav atrastas (nav ielādētas vai mainīts selektors).")
         else:
-            print(f"Atrastas {count} pieturas:")
-            for i in range(count):
-                print(f"{i+1}. {pieturas.nth(i).inner_text()}")
+            pieturas = page.locator(".stop").element_handles()
+            redzamas = [e.text_content().strip() for e in pieturas if e.is_visible()]
+            print(f"Atrastas {len(redzamas)} redzamās pieturas:")
+            for i, p in enumerate(redzamas, 1):
+                print(f"{i}. {p}")
 
         browser.close()
-
+'''
 # lietotāja izvelne lietotājam
 def galvenais():
     user = int(input("Kurš lietotājs (1 vai 2): "))
