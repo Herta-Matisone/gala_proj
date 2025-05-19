@@ -28,13 +28,17 @@
 # 2.variants
 from playwright.sync_api import sync_playwright
 
-def iegut_marsrutu(adrese):
+def iegut_marsrutu(adrese, transp):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         print(f"Lādējam datus no: {adrese}")
+        # laiks = "/12:00"
 
         page.goto(adrese)
+
+        # adrese = adrese + laiks;
+        # print(adrese)
 
         # Gaidām, kamēr DOM ir ielādēts
         page.wait_for_load_state("networkidle")
@@ -46,37 +50,59 @@ def iegut_marsrutu(adrese):
         except Exception as e:
             print("Virsraksts nav atrasts.", str(e))
 
-# Mēģinām atrast pieturas
+        # Mēģinām atrast pieturas
         try:
             pieturas = page.locator(".ib") 
             count = pieturas.count()
             if count == 0:
                 print("Pieturas nav atrastas.")
             else:
-                print(f"Atrastas {count} pieturas:")
                 for i in range(count):
                     teksts = pieturas.nth(i).inner_text()
                     print(teksts)
                     if "Vieta" in teksts:  # Filtrējam pēc teksta
                         print(f"{i+1}. {teksts}")
-        except Exception as e:
-            print("Pieturas nav atrastas.", str(e))
 
-# Mēģinām atrast bus/trol num
-        try:
-            pieturass = page.locator(".num.num1.bus, .num.num2.bus, .num.num1.trol, .num.num2.trol") 
-            count = pieturass.count()
-            if count == 0:
+            # transporta nr un tā tips
+            if transp == 1:
+                braucamie = page.locator(".num.num1.trol, .num.num2.trol, .num.num1.bus, .num.num2.bus, .num.num1.tram, .num.num2.tram")
+            elif transp == 2:
+                braucamie = page.locator(".num.num1.bus, .num.num2.bus")
+            elif transp == 3:
+               braucamie = page.locator( ".num.num1.trol, .num.num2.trol, .num.num1.tram, .num.num2.tram")
+            else:
+                print("Nepareizs transporta tips.")
+                return
+            count_braucamie = braucamie.count()
+            if count_braucamie == 0:
                 print("braucamie nav atrasti.")
             else:
-                print(f"Atrastas {count} braucamie:")
-                for i in range(count):
-                    teksts = pieturass.nth(i).inner_text()
-                    print(teksts)
-                    if "Vieta" in teksts:  # Filtrējam pēc teksta
-                        print(f"{i+1}. {teksts}")
+                print(f"Atrastas {count_braucamie} braucamie:")
+                for i in range(count_braucamie):
+                    element = braucamie.nth(i)  
+                    teksts = element.inner_text().strip()
+
+                    try:
+                        klases = element.evaluate("e => e.className") 
+                    except Exception as e:
+                        print(f"Neizdevās nolasīt klasi: {e}")
+                        klases = ""
+
+                    # Determine transport type from class
+                    if "bus" in klases:
+                        tips = "A"   # Autobuss
+                    elif "trol" in klases:
+                        tips = "T"   # Trolejbus
+                    elif "tram" in klases:
+                        tips = "TR"  # Tramvajs
+                    else:
+                        tips = "?"   # Nezināms tips
+
+                    if teksts:
+                        print(f"{i+1}. {teksts}{tips}")
         except Exception as e:
-            print("braucamie nav atrasti.", str(e))
+            print("Pieturas nav atrastas.", str(e))
+        
 '''
         try:
             laiks_un_vieta = laiks_un_vieta.text_content().strip()
@@ -129,11 +155,14 @@ def galvenais():
     else:
         print("Nav tāds lietotājs")
         return
+    laiks = str(input("kādā laikā?(formātā - 13:00): "))
+    adrese = adrese + "/" + laiks
+    transp = int(input("Kurš transports (1 - viss,  2 - tikai Autobusu, 3 - tikai Tramvaju/Trole): "))
     
 
     #if adrese:
     #    print(f"lādē datus")
-    iegut_marsrutu(adrese)
+    iegut_marsrutu(adrese, transp)
 #print(f"Lādējas datus no: {adrese}")
 #iegut_marsrutu(adrese)
 
@@ -142,19 +171,4 @@ if __name__ == "__main__":
     galvenais()
 
 
-
-
-
-
-transp = int(input("Kurš transports (1 - viss,  2 - tikai A, 3 - tikai T ): "))
-#if tranport == 2 tad print only A, if transport == 3 tad print only T, if == 1 print all  
-parsiet = int(input("Vai ar pārsēšanos ar? (1 - Jā, 2 - Nē): "))
-# domāju if parsiet == 2 tad, if transport > 1 tad don't print
-# ja parsiet == 1 tad neko nedarīt un visu printēt 
-
-
-
-
 # jāpaskatās būs kā var uztaisīt lai var user mēģināt vēlreiz, bet tas tā
-
-# Neizdevās līdz galam dabūt lai strādā, turpināšu rīt.
