@@ -24,17 +24,25 @@ def iegut_marsrutu(adrese, transp):
 
         # Mēģinām atrast pieturas
         try:
+            # Iegūstam pieturas un transportus
+            pieturas = page.locator(".ib") 
+            #braucamie = None
+            count = pieturas.count()
+            '''
             pieturas = page.locator(".ib") 
             count = pieturas.count()
             if count == 0:
                 print("Pieturas nav atrastas.")
             else:
                 for i in range(count):
-                    teksts = pieturas.nth(i).inner_text()
-                    print(teksts)
-                    if "Vieta" in teksts:  # Filtrējam pēc teksta
-                        print(f"{i+1}. {teksts}")
+                    teksts1 = pieturas.nth(i).inner_text()
+                    #print(teksts)
+                    print(f"{i+1}. {teksts1}")
+                    
 
+                    #if "Vieta" in teksts:  # Filtrējam pēc teksta
+                     #   print(f"{i+1}. {teksts}")
+                     '''  
             # transporta nr un tā tips
             if transp == 1:
                 braucamie = page.locator(".num.num1.trol, .num.num2.trol, .num.num1.bus, .num.num2.bus, .num.num1.tram, .num.num2.tram")
@@ -46,13 +54,21 @@ def iegut_marsrutu(adrese, transp):
                 print("Nepareizs transporta tips.")
                 return
             count_braucamie = braucamie.count()
+            #pieturas = page.locator(".ib") 
+            #count = pieturas.count()
             if count_braucamie == 0:
                 print("braucamie nav atrasti.")
+                print("Pieturas nav atrastas.")
             else:
                 print(f"Atrasti {count_braucamie} braucamie:")
+                pietura_indekss = 0
                 for i in range(count_braucamie):
                     element = braucamie.nth(i)  
                     teksts = element.inner_text().strip()
+                    #for j in range(3):  
+                    #    pietura_index = i * 3 + j   
+                    #    if pietura_index < count:                  
+                    #        teksts1 = pieturas.nth(i).inner_text()
 
                     try:
                         klases = element.evaluate("e => e.className") 
@@ -69,14 +85,36 @@ def iegut_marsrutu(adrese, transp):
                         tips = "TRA"  # Tramvajs
                     else:
                         tips = "?"   # Nezināms tips
+                    print(f"{i+1}. {tips} {teksts}")
 
-                    if teksts:
-                        print(f"{i+1}. {teksts}{tips}")
+                    #if teksts and teksts1:
+                    #    for i in range(i<10):
+                    #        print(f"{i+1}. {tips} {teksts}")
+                            
+                            #for j in range(3):
+                            #    x = 0
+                            #    for x in range(x<3):
+                            #        pietura_index = x+1
+                            #        if pietura_index < count:
+                            #            print(f"{teksts1}")
+                    # Cik pieturas drukāt šim braucienam: pārmaiņus 4 un 3
+                    pieturu_skaits = 4 if i in [0] else 3
+                    for j in range(pieturu_skaits):
+                        pietura_index = i * 3 + j 
+                        if pietura_index < count:
+                            pietura_teksts = pieturas.nth(pietura_index).inner_text().strip()
+                            print(f"   {pietura_teksts}")
+                            
+                    print()  # tukša rinda starp braucieniem
+
         except Exception as e:
             print("Pieturas nav atrastas.", str(e))
-    
-  
-
+        
+        #if teksts1:
+        #    transporta_numeris = braucamie.nth(i).inner_text().strip()
+    #for i in range(i<10):
+    #    print(f"{tips} - {teksts} - {teksts1}  ")
+    #print(f"Pietura {i+1}: {teksts1} | Transporta numurs: {transporta_numeris} ")
 # lietotāja izvelne lietotājam
 def galvenais():
     user = int(input("Kurš lietotājs (1 vai 2): "))
