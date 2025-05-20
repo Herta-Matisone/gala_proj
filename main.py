@@ -131,6 +131,12 @@ def galvenais():
     adrese = ""
     if user == 1:
         # lietotāja izvelne meršrutam
+        print("")
+        print("Maršruti")
+        print("1 - Elizabetes iela   :   Ķīpsala")
+        print("2 - Ķīpsala           :   Centrālā stacija")
+        print("3 - Centrālā satcija  :   Medicīnas muzejs")
+        print("")
         rout = int(input("Kurš maršruts (1, 2 vai 3): "))
         if rout == 1:   
             adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/7984/0611,0642"
@@ -142,6 +148,12 @@ def galvenais():
             print("Nav tāds maršruts")  
     elif user == 2:
         # lietotāja izvelne meršrutam
+        print("")
+        print("Maršruti")
+        print("1 - ---   :   ---")
+        print("2 - ---   :   ---")
+        print("3 - ---   :   ---")
+        print("")
         rout = int(input("Kurš maršruts (1, 2 vai 3): "))
         if rout == 1:   
             adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/56.95859;24.0845/56.97311;24.19454/2025-05-19 "
