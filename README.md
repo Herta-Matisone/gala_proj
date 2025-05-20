@@ -46,7 +46,7 @@ Izmanto noteiktu transporta veidu, ir jāizlasa CSS klase, jo saturs vizuāli va
 
 ---
 Herta Matisone 241RDB177
-241RDB130
+Laura Ruta Rengarte 241RDB130
 
 
 
