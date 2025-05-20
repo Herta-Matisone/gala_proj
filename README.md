@@ -1,5 +1,7 @@
 # gala_proj
-Noslēguma projekts ir jūsu iespēja izmantot jauniegūtās prasmes, lai izstrādātu pilnvērtīgo programmatūru noteikto uzdevuma risināšanai. 
+Noslēguma projekts ir jūsu iespēja izmantot jauniegūtās prasmes, lai izstrādātu pilnvērtīgo programmatūru noteikto uzdevuma risināšanai. Projektā jāizmanto zināšanas, kas ir iegūtas kursa laikā, bet projekta uzdevumu jāģenerē jums pašiem. Mēs gribam, lai Jūs izveidotu sistēmu, kas automatizēs kādu no jūsu ikdienas uzdevumiem.
+
+Tā kā programmatūras izstrāde reti kad ir vienas personas darbs, jums tiek dota iespēja sadarboties ar vienu vai diviem kursabiedriem šī gala projekta izstrādes laikā. Protams, tiek sagaidīts, ka katrs students jebkurā šādā grupā vienlīdzīgi piedalās grupas projekta izstrādē. Turklāt tiek sagaidīts, ka divu vai trīs personu grupas projekta apjoms attiecīgi būs divreiz vai trīsreiz lielāks nekā vienas personas projekts. 
 
 ## Uzdevums
 Izveidot programmu, kas nolasa informācij no rīgas satiksmes maršruta mājas lapas, dodot iespēju lietotājam izvēlēties vienu no 3 iestatītajiem maršrutiem, laiku un trasnporta veidu. Programma pasniedz iegūto informāciju lietotājam lasāmā un saprotamā veidā. 
@@ -41,6 +43,10 @@ Izmanto CSS selektorus, lai atlasītu specifiskus HTML elementus un nolasītu da
 ### Transporta tipu filtrēšana pēc klasēm
 evaluate("e => e.className"): Iegūst HTML elementa klases, lai noteiktu, kāda tipa transports tas ir (bus, trol, tram).
 Izmanto noteiktu transporta veidu, ir jāizlasa CSS klase, jo saturs vizuāli var būt vienāds.
+
+---
+Herta Matisone 241RDB177
+241RDB130
 
 
 
