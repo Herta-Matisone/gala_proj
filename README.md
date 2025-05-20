@@ -17,8 +17,6 @@ Uzdevuma programma veidota ikdienišķo maršrutu meklēšanas sistematizēšana
 Playwright ir automatizācijas bibliotēka, ko izmanto, lai kontrolētu pārlūkprogrammas. Tā ļauj uzprogrammēt lietotāja darbību simulāciju.
 Specifiskā bibliotēka izmantot, jo ir nepieciešam ielādēt un piekļūt JavaScript failiem un datiem. 
 
-## Datu Struktūras
-
 ## Funkcijas
 ### def iegut_marsrutu(adrese, transp)
 Galvenā funkcija, kas apmeklē norādīto Rīgas satiksmes maršruta plānotāja lapu, gaida datu ielādi, un izvelk informāciju par pieturām un transporta veidiem pēc tam formatējot.
