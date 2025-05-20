@@ -1,31 +1,3 @@
-'''
- 1. variants. Šis man nestrādā, jo dati ir javascript(mēģināšu citu variantu).
- import requests
- from bs4 import BeautifulSoup
-
- def iegut_marsrutu(adrese):
-     lapa = requests.get(adrese)
-     if lapa.status_code !=200:
-         print(f"Kķūda ielādējot lapu! Statusa kods: {lapa.status_code}")
-         return
-  
-     lapas_saturs = BeautifulSoup(lapa.content, "html.parser")
-
-     virsraksts = lapas_saturs.find("h1")
-     if virsraksts:
-         print("Maršruta virsraksts:", virsraksts.get_text(strip=True))
-     else:
-         print("Virsraksts nav atrasts.")
-
-     saraksti = lapas_saturs.find_all("div", class_="stop")
-     if not saraksti:
-         print("Neatradām pieturas vai sarakstus šajā lapā.")
-     else:
-         print(f"Atrasts {len(saraksti)} pieturas:")
-         for i, pietura in enumerate(saraksti, 1):
-             print(f"{i}. {pietura.get_text(strip=True)}")
-'''
-# 2.variants
 from playwright.sync_api import sync_playwright
 
 def iegut_marsrutu(adrese, transp):
@@ -36,6 +8,7 @@ def iegut_marsrutu(adrese, transp):
         # laiks = "/12:00"
 
         page.goto(adrese)
+
 
         # adrese = adrese + laiks;
         # print(adrese)
@@ -76,7 +49,7 @@ def iegut_marsrutu(adrese, transp):
             if count_braucamie == 0:
                 print("braucamie nav atrasti.")
             else:
-                print(f"Atrastas {count_braucamie} braucamie:")
+                print(f"Atrasti {count_braucamie} braucamie:")
                 for i in range(count_braucamie):
                     element = braucamie.nth(i)  
                     teksts = element.inner_text().strip()
@@ -101,30 +74,9 @@ def iegut_marsrutu(adrese, transp):
                         print(f"{i+1}. {teksts}{tips}")
         except Exception as e:
             print("Pieturas nav atrastas.", str(e))
-        
-'''
-        try:
-            laiks_un_vieta = laiks_un_vieta.text_content().strip()
-            print("Maršruta laiks un vieta:", laiks_un_vieta)
-        except Exception as e:
-            print("Laiks un vieta nav atrasts.", str(e))
+    
+  
 
-        # Mēģinām iegūt pieturas
-        page.wait_for_selector(".num num2 trol", ".num num2 bus", timeout=10000)
-        pieturas = page.locator(".stop")
-
-        count = pieturas.count()
-        if page.locator(".stop").count() == 0:
-            print("Pieturas nav atrastas (nav ielādētas vai mainīts selektors).")
-        else:
-            pieturas = page.locator(".stop").element_handles()
-            redzamas = [e.text_content().strip() for e in pieturas if e.is_visible()]
-            print(f"Atrastas {len(redzamas)} redzamās pieturas:")
-            for i, p in enumerate(redzamas, 1):
-                print(f"{i}. {p}")
-
-        browser.close()
-'''
 # lietotāja izvelne lietotājam
 def galvenais():
     user = int(input("Kurš lietotājs (1 vai 2): "))
@@ -150,17 +102,17 @@ def galvenais():
         # lietotāja izvelne meršrutam
         print("")
         print("Maršruti")
-        print("1 - ---   :   ---")
-        print("2 - ---   :   ---")
-        print("3 - ---   :   ---")
+        print("1 - Kīpsala   :   Imanta")
+        print("2 - Kīpsala   :   Piņķi")
+        print("3 - Kīpsala   :   Mārupe")
         print("")
         rout = int(input("Kurš maršruts (1, 2 vai 3): "))
         if rout == 1:   
-            adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/56.95859;24.0845/56.97311;24.19454/2025-05-19 "
+            adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/0611,0642/3031,3054 "
         elif rout == 2: 
-            adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/56.95859;24.0845/4977,8073/2025-05-19"
+            adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/0611,0642/4977,8073"
         elif rout == 3: 
-            adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/56.95859;24.0845/3031,3054/2025-05-19"
+            adrese = "https://saraksti.rigassatiksme.lv/index.html#plan/0611,0642/1392,1395"
         else:
             print("Nav tāds maršruts")  
     else:
