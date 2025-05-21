@@ -18,7 +18,7 @@ Playwright ir automatizācijas bibliotēka, ko izmanto, lai kontrolētu pārlūk
 Specifiskā bibliotēka izmantot, jo ir nepieciešam ielādēt un piekļūt JavaScript failiem un datiem. 
 
 ## Funkcijas
-### def iegut_marsrutu(adrese, transp)
+### def iegut_marsrutu(adrese)
 Galvenā funkcija, kas apmeklē norādīto Rīgas satiksmes maršruta plānotāja lapu, gaida datu ielādi, un izvelk informāciju par pieturām un transporta veidiem pēc tam formatējot.
 
 Parametri:  
