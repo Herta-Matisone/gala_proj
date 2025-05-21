@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 
-def iegut_marsrutu(adrese, transp):
+def iegut_marsrutu(adrese):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
@@ -44,15 +44,7 @@ def iegut_marsrutu(adrese, transp):
                      #   print(f"{i+1}. {teksts}")
                      '''  
             # transporta nr un tā tips
-            if transp == 1:
-                braucamie = page.locator(".num.num1.trol, .num.num2.trol, .num.num1.bus, .num.num2.bus, .num.num1.tram, .num.num2.tram")
-            elif transp == 2:
-                braucamie = page.locator(".num.num1.bus, .num.num2.bus")
-            elif transp == 3:
-               braucamie = page.locator( ".num.num1.trol, .num.num2.trol, .num.num1.tram, .num.num2.tram")
-            else:
-                print("Nepareizs transporta tips.")
-                return
+            braucamie = page.locator(".num.num1.trol, .num.num2.trol, .num.num1.bus, .num.num2.bus, .num.num1.tram, .num.num2.tram")
             count_braucamie = braucamie.count()
             #pieturas = page.locator(".ib") 
             #count = pieturas.count()
@@ -158,9 +150,8 @@ def galvenais():
         return
     laiks = str(input("kādā laikā?(formātā - 13:00): "))
     adrese = adrese + "/" + laiks
-    transp = int(input("Kurš transports (1 - viss,  2 - tikai Autobusu, 3 - tikai Tramvaju/Trole): "))
 
-    iegut_marsrutu(adrese, transp)
+    iegut_marsrutu(adrese)
 
 if __name__ == "__main__":
     galvenais()
